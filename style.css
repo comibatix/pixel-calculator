@@ -1,0 +1,401 @@
+/* Подключаем пиксельный шрифт */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Базовые стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
+    image-rendering: pixelated;
+}
+
+body {
+    background: #1a1a2e;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #eaeaea;
+}
+
+/* Контейнер игры */
+.game-container {
+    background: #16213e;
+    padding: 30px;
+    border: 4px solid #0f3460;
+    box-shadow: 
+        8px 8px 0 #0f3460,
+        0 0 0 4px #e94560;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+}
+
+h1 {
+    font-size: 16px;
+    color: #e94560;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 0 #0f3460;
+    letter-spacing: 2px;
+}
+
+/* Калькулятор */
+.calculator {
+    background: #0f3460;
+    padding: 20px;
+    border: 4px solid #533483;
+    margin-bottom: 20px;
+    position: relative; 
+  }
+
+/* Дисплей (как старый LCD экран) */
+.display {
+    background: #9bbc0f;
+    color: #0f380f;
+    font-size: 24px;
+    padding: 15px;
+    text-align: right;
+    border: 4px solid #306230;
+    margin-bottom: 20px;
+    min-height: 60px;
+    box-shadow: inset 4px 4px 0 #306230;
+    word-break: break-all;
+}
+
+/* Сетка кнопок */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+/* Базовая кнопка */
+.btn {
+    background: #533483;
+    color: #eaeaea;
+    border: none;
+    padding: 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 3px solid #e94560;
+    box-shadow: 4px 4px 0 #1a1a2e;
+    transition: all 0.1s;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Эффект нажатия кнопки */
+.btn:hover {
+    background: #e94560;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #1a1a2e;
+}
+
+.btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+/* Кнопки операторов */
+.btn.operator {
+    background: #e94560;
+    color: #1a1a2e;
+}
+
+/* Кнопка "=" */
+.btn.equals {
+    background: #9bbc0f;
+    color: #0f380f;
+    grid-column: span 1;
+}
+
+/* Игровая информация */
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #9bbc0f;
+    padding: 10px;
+    background: #0f3460;
+    border: 3px solid #533483;
+}
+/* Область задачи */
+.problem-display {
+    background: #16213e;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 4px solid #e94560;
+    box-shadow: 4px 4px 0 #0f3460;
+}
+
+.problem-text {
+    font-size: 20px;
+    color: #9bbc0f;
+    text-align: center;
+    min-height: 30px;
+}
+
+/* Кнопка старта */
+.start-btn {
+    background: #e94560;
+    color: #1a1a2e;
+    border: none;
+    padding: 15px 40px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    border: 3px solid #9bbc0f;
+    box-shadow: 4px 4px 0 #0f3460;
+    font-family: 'Press Start 2P', cursive;
+    transition: all 0.1s;
+}
+
+.start-btn:hover {
+    background: #9bbc0f;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #0f3460;
+}
+
+.start-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+.start-btn:disabled {
+    background: #533483;
+    color: #eaeaea;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+/* Прогресс-бар таймера */
+.timer-bar-container {
+    width: 100%;
+    height: 12px;
+    background: #0f3460;
+    border: 3px solid #533483;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.timer-bar {
+    height: 100%;
+    width: 100%;
+    background: #9bbc0f;
+    transition: width 1s linear, background-color 0.3s;
+}
+
+/* Меняем цвет когда времени мало */
+.timer-bar.warning {
+    background: #e94560;
+}
+
+.timer-bar.critical {
+    background: #ff0000;
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+/* Анимация тряски при ошибке */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.calculator.shake {
+    animation: shake 0.5s;
+}
+/* Частицы */
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #9bbc0f;
+    pointer-events: none;
+    border-radius: 50%;
+    animation: particle-fly 0.8s ease-out forwards;
+}
+
+@keyframes particle-fly {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(0);
+    }
+}
+
+/* Рекорд */
+.record-display {
+    text-align: center;
+    font-size: 12px;
+    color: #ffd700;
+    margin-top: 10px;
+    padding: 8px;
+    background: #0f3460;
+    border: 3px solid #ffd700;
+    box-shadow: 3px 3px 0 #533483;
+    font-family: 'Press Start 2P', cursive;
+}
+/* Статус игрока (комбо + уровень + множитель) */
+.status-display {
+    text-align: center;
+    font-size: 11px;
+    margin-top: 10px;
+    padding: 10px;
+    background: #0f3460;
+    border: 3px solid #9bbc0f;
+    box-shadow: 3px 3px 0 #533483;
+    font-family: 'Press Start 2P', cursive;
+    transition: all 0.3s;
+}
+
+.status-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.combo-info { color: #ff6b6b; }
+.level-info { color: #ffd700; }
+.multiplier-info { color: #9bbc0f; }
+.bonus-info { color: #87ceeb; }
+
+/* Цвета для разных уровней */
+.status-display.level-0 { border-color: #9bbc0f; }
+.status-display.level-1 { border-color: #ffd700; color: #ffd700; }
+.status-display.level-2 { border-color: #ff8c00; color: #ff8c00; }
+.status-display.level-3 { 
+    border-color: #ff0000; 
+    color: #ff0000;
+    animation: level-pulse 1s infinite;
+}
+
+@keyframes level-pulse {
+    0%, 100% { box-shadow: 3px 3px 0 #533483; }
+    50% { box-shadow: 3px 3px 15px #ff0000; }
+}
+
+/* Всплывающее уведомление о бонусе */
+.bonus-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #ffd700;
+    text-shadow: 3px 3px 0 #e94560;
+    pointer-events: none;
+    animation: bonus-fly 1.5s ease-out forwards;
+    z-index: 100;
+    font-family: 'Press Start 2P', cursive;
+    white-space: nowrap;
+}
+
+@keyframes bonus-fly {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -150%) scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -250%) scale(1);
+    }
+}
+/* ===== АДАПТАЦИЯ ПОД МОБИЛЬНЫЕ ===== */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .game-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+    
+    h1 {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .problem-display {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .problem-text {
+        font-size: 16px;
+    }
+    
+    .calculator {
+        padding: 12px;
+    }
+    
+    .display {
+        font-size: 20px;
+        padding: 12px;
+        min-height: 50px;
+    }
+    
+    .btn {
+        padding: 12px;
+        font-size: 12px;
+        border-width: 2px;
+        box-shadow: 3px 3px 0 #1a1a2e;
+    }
+    
+    .btn:active {
+        transform: translate(3px, 3px);
+    }
+    
+    .game-info {
+        font-size: 10px;
+        padding: 8px;
+    }
+    
+    .status-display,
+    .record-display {
+        font-size: 10px;
+        padding: 6px;
+    }
+    
+    .start-btn {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+}
+
+/* Очень маленькие экраны (старые телефоны) */
+@media (max-width: 360px) {
+    .btn {
+        padding: 10px;
+        font-size: 11px;
+    }
+    
+    .display {
+        font-size: 18px;
+    }
+    
+    .problem-text {
+        font-size: 14px;
+    }
+}
+
+/* Запрет выделения текста на мобильных (чтобы не мешало играть) */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

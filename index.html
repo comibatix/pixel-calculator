@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пиксельный Калькулятор</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- PWA мета-теги -->
+<meta name="theme-color" content="#e94560">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PixelCalc">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Пиксельный Калькулятор</h1>
+            <div class="problem-display" id="problemDisplay">
+            <div class="problem-text" id="problemText">Нажми СТАРТ</div>
+        </div>
+        
+        <div class="calculator">
+            <div class="display" id="display">0</div>
+           <div class="buttons">
+    <button class="btn">7</button>
+    <button class="btn">8</button>
+    <button class="btn">9</button>
+    <button class="btn operator">/</button>
+    
+    <button class="btn">4</button>
+    <button class="btn">5</button>
+    <button class="btn">6</button>
+    <button class="btn operator">*</button>
+    
+    <button class="btn">1</button>
+    <button class="btn">2</button>
+    <button class="btn">3</button>
+    <button class="btn operator">-</button>
+    
+    <button class="btn operator">.</button>
+    <button class="btn">0</button>
+    <button class="btn operator">+</button>
+    <button class="btn clear operator">С</button>
+    
+    <button class="btn equals" style="grid-column: span 4;">=</button>
+</div>
+
+        </div>
+        <div class="game-info">
+            <div class="score">Очки: <span id="score">0</span></div>
+            <div class="timer">Время: <span id="timer">60</span> сек</div>
+        </div>
+        <!-- Прогресс-бар таймера -->
+<div class="timer-bar-container">
+    <div class="timer-bar" id="timerBar"></div>
+</div>
+<!-- Рекорд -->
+<div class="record-display">
+    🏆 Рекорд: <span id="record">0</span>
+</div>
+
+<!-- Статус игрока -->
+<div class="status-display" id="statusDisplay">
+    <div class="status-row">
+        <span class="combo-info">🔥 Комбо: <span id="combo">0</span></span>
+        <span class="level-info">⚔️ <span id="levelName">Новичок</span></span>
+    </div>
+    <div class="status-row">
+        <span class="multiplier-info">Множитель: <span id="multiplier">x1</span></span>
+        <span class="bonus-info">Бонус: <span id="timeBonus">+0</span> сек</span>
+    </div>
+</div>
+
+<button class="start-btn" id="startBtn">СТАРТ</button>
+    </div>
+    
+    <script src="sounds.js"></script>
+    <script src="script.js"></script>
+    
+<!-- Регистрация Service Worker -->
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+            .then(function(reg) {
+                console.log('Service Worker зарегистрирован');
+            })
+            .catch(function(err) {
+                console.log('Ошибка регистрации SW:', err);
+            });
+    }
+</script>
+    
+</body>
+</html>
